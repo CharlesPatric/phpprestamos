@@ -2,21 +2,19 @@
 
 require_once __DIR__ . '/config/database.php';
 
-$stmt = $pdo->query("SELECT COUNT(*) AS total FROM lector");
+$registro = 951020323;
 
-$resultado = $stmt->fetch();
+$sql = "SELECT * FROM lector WHERE registro = :registro";
 
-echo "Estudiantes registrados: " . $resultado['total'] . "<BR>";
+$stmt = $pdo->prepare($sql);
 
-$stmt = $pdo->query("SELECT COUNT(*) AS total FROM herramientas");
+$stmt->execute([
+    'registro' => $registro
+]);
 
-$resultado = $stmt->fetch();
+$estudiante = $stmt->fetch();
 
-echo "Herramientas registrados: " . $resultado['total'] . "<BR>";
-
-$stmt = $pdo->query("SELECT COUNT(*) AS total FROM prestamos");
-
-$resultado = $stmt->fetch();
-
-echo "Prestamos registrados: " . $resultado['total'] . "<BR>";
+echo "Registro: " . $estudiante['registro'] . "<br>";
+echo "Nombre: " . $estudiante['nombre'] . "<br>";
+echo "Correo: " . $estudiante['correo'] . "<br>";
 
