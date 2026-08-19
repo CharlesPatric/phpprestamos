@@ -1,0 +1,36 @@
+prestamos/
+│
+├── index.php
+│
+├── dist/
+│   
+├── plugins/
+├── config/
+│   └── database.php
+│
+├── includes/
+│   ├── header.php
+│   ├── navbar.php
+│   ├── sidebar.php
+│   └── footer.php
+│
+├── estudiantes/
+│   └── index.php
+│
+├── herramientas/
+│   ├── index.php
+│   ├── crear.php
+│   ├── editar.php
+│   └── eliminar.php
+│
+├── roles/
+├── usuarios/
+├── prestamos/
+│   ├── index.php
+│   ├── crear.php
+│   ├── detalle.php
+│   └── devolver.php
+│
+└── assets/
+   ├── css/
+   └── js/

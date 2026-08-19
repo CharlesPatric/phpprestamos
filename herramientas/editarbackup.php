@@ -1,12 +1,18 @@
 <?php
+
 require_once __DIR__ . '/../config/database.php';
+
 $id = $_GET['id'];
+
 $mensaje = '';
 
-// ==================================================
+
+// --------------------------------------------------
 // ACTUALIZAR HERRAMIENTA
-// ==================================================
+// --------------------------------------------------
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $codigo = $_POST['codigo'];
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
@@ -34,9 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-// ==================================================
+// --------------------------------------------------
 // BUSCAR HERRAMIENTA
-// ==================================================
+// --------------------------------------------------
 
 $sql = "SELECT * FROM herramientas WHERE id = :id";
 
@@ -51,14 +57,14 @@ $herramienta = $stmt->fetch();
 if (!$herramienta) {
 
     echo "Herramienta no encontrada.";
-    exit;
 
+    exit;
 }
 
 
-// ==================================================
+// --------------------------------------------------
 // ADMINLTE
-// ==================================================
+// --------------------------------------------------
 
 require_once __DIR__ . '/../includes/header.php';
 
@@ -126,6 +132,7 @@ require_once __DIR__ . '/../includes/sidebar.php';
     <section class="content">
 
         <div class="container-fluid">
+
 
             <?php if ($mensaje): ?>
 
@@ -241,36 +248,23 @@ require_once __DIR__ . '/../includes/sidebar.php';
                                 </div>
 
 
-                                <!-- DISPONIBLE -->
+                                <!-- INFORMACIÓN -->
 
-                                <div class="form-group">
+                                <div class="alert alert-info">
 
-                                    <label>
-                                        Cantidad disponible
-                                    </label>
+                                    <i class="fas fa-info-circle"></i>
 
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        value="<?= $herramienta['cantidad_disponible'] ?>"
-                                        readonly
-                                    >
+                                    Cantidad disponible actualmente:
 
-                                    <small class="form-text text-muted">
-
-                                        Este valor será controlado
-                                        automáticamente por el sistema
-                                        de préstamos.
-
-                                    </small>
+                                    <strong>
+                                        <?= $herramienta['cantidad_disponible'] ?>
+                                    </strong>
 
                                 </div>
 
 
                             </div>
 
-
-                            <!-- BOTONES -->
 
                             <div class="card-footer">
 
@@ -312,6 +306,10 @@ require_once __DIR__ . '/../includes/sidebar.php';
     </section>
 
 </div>
+
+
 <?php
+
 require_once __DIR__ . '/../includes/footer.php';
+
 ?>
