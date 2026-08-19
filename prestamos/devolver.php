@@ -1,17 +1,12 @@
 <?php
-
 require_once __DIR__ . '/../config/database.php';
-
 $id = $_GET['id'];
-
 $mensaje = '';
 $error = '';
-
 
 // --------------------------------------------------
 // BUSCAR PRÉSTAMO
 // --------------------------------------------------
-
 $sql = "SELECT
             p.id,
             p.registro_estudiante,
@@ -22,17 +17,12 @@ $sql = "SELECT
             p.fecha_prestamo,
             p.estado,
             p.observaciones
-
         FROM prestamos p
-
         INNER JOIN lector l
             ON p.registro_estudiante = l.registro
-
         INNER JOIN herramientas h
             ON p.herramienta_id = h.id
-
         WHERE p.id = :id";
-
 
 $stmt = $pdo->prepare($sql);
 

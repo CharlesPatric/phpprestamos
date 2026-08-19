@@ -4,6 +4,21 @@ require_once __DIR__ . '/../config/database.php';
 // --------------------------------------------------
 // CONSULTAR PRÉSTAMOS
 // --------------------------------------------------
+
+
+////-*
+// --------------------------------------------------
+// FILTROS
+// --------------------------------------------------
+
+$buscar = $_GET['buscar'] ?? '';
+$estado = $_GET['estado'] ?? '';
+
+
+// --------------------------------------------------
+// CONSULTA
+// --------------------------------------------------
+
 $sql = "SELECT
             p.id,
             p.registro_estudiante,
@@ -24,13 +39,65 @@ $sql = "SELECT
         INNER JOIN herramientas h
             ON p.herramienta_id = h.id
 
-        ORDER BY p.id DESC";
+        WHERE 1=1";
 
 
-$stmt = $pdo->query($sql);
+// --------------------------------------------------
+// FILTRO DE BÚSQUEDA
+// --------------------------------------------------
+
+if ($buscar !== '') {
+
+    $sql .= " AND (
+                l.nombre LIKE :buscar
+                OR l.registro LIKE :buscar
+                OR h.codigo LIKE :buscar
+                OR h.nombre LIKE :buscar
+              )";
+}
+
+
+// --------------------------------------------------
+// FILTRO DE ESTADO
+// --------------------------------------------------
+
+if ($estado !== '') {
+
+    $sql .= " AND p.estado = :estado";
+}
+
+
+$sql .= " ORDER BY p.id DESC";
+
+
+$stmt = $pdo->prepare($sql);
+
+
+// --------------------------------------------------
+// PARÁMETROS
+// --------------------------------------------------
+
+$params = [];
+
+
+if ($buscar !== '') {
+
+    $params['buscar'] = '%' . $buscar . '%';
+
+}
+
+
+if ($estado !== '') {
+
+    $params['estado'] = $estado;
+
+}
+
+
+$stmt->execute($params);
 
 $prestamos = $stmt->fetchAll();
-
+///--*
 
 // --------------------------------------------------
 // ADMINLTE
@@ -104,6 +171,146 @@ require_once __DIR__ . '/../includes/sidebar.php';
                         <i class="fas fa-plus"></i>
                         Nuevo préstamo
                     </a>
+                    <div class="card">
+
+                    <div class="card-header">
+
+                        <h3 class="card-title">
+
+                            <i class="fas fa-search"></i>
+
+                            Buscar préstamos
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <form method="GET">
+
+                            <div class="row">
+
+
+                                <!-- BUSCAR -->
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+
+                                        <label for="buscar">
+
+                                            Estudiante o herramienta
+
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            name="buscar"
+                                            id="buscar"
+                                            class="form-control"
+                                            value="<?= htmlspecialchars($buscar) ?>"
+                                            placeholder="Registro, nombre, código..."
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- ESTADO -->
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+
+                                        <label for="estado">
+
+                                            Estado
+
+                                        </label>
+
+                                        <select
+                                            name="estado"
+                                            id="estado"
+                                            class="form-control"
+                                        >
+
+                                            <option value="">
+                                                Todos
+                                            </option>
+
+                                            <option
+                                                value="prestado"
+                                                <?= $estado === 'prestado' ? 'selected' : '' ?>
+                                            >
+                                                Prestados
+                                            </option>
+
+                                            <option
+                                                value="devuelto"
+                                                <?= $estado === 'devuelto' ? 'selected' : '' ?>
+                                            >
+                                                Devueltos
+                                            </option>
+
+                                            <option
+                                                value="atrasado"
+                                                <?= $estado === 'atrasado' ? 'selected' : '' ?>
+                                            >
+                                                Atrasados
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- BOTONES -->
+
+                                <div class="col-md-2">
+
+                                    <label>
+                                        &nbsp;
+                                    </label>
+
+                                    <div>
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                        >
+
+                                            <i class="fas fa-search"></i>
+
+                                            Buscar
+
+                                        </button>
+
+
+                                        <a
+                                            href="index.php"
+                                            class="btn btn-secondary"
+                                        >
+
+                                            <i class="fas fa-sync"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
                 </div>
             </div>
             <!-- TABLA -->
