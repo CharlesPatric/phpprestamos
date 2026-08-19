@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../config/database.php';
 
+$mensaje = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $codigo = $_POST['codigo'];
@@ -10,9 +12,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cantidad = $_POST['cantidad'];
 
     $sql = "INSERT INTO herramientas
-            (codigo, nombre, descripcion, cantidad, cantidad_disponible, estado)
+            (
+                codigo,
+                nombre,
+                descripcion,
+                cantidad,
+                cantidad_disponible,
+                estado
+            )
             VALUES
-            (:codigo, :nombre, :descripcion, :cantidad, :cantidad_disponible, :estado)";
+            (
+                :codigo,
+                :nombre,
+                :descripcion,
+                :cantidad,
+                :cantidad_disponible,
+                :estado
+            )";
 
     $stmt = $pdo->prepare($sql);
 
@@ -25,74 +41,222 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'estado' => 'disponible'
     ]);
 
-    echo "Herramienta registrada correctamente.";
+    $mensaje = 'Herramienta registrada correctamente.';
 }
+
+
+require_once __DIR__ . '/../includes/header.php';
+
+require_once __DIR__ . '/../includes/navbar.php';
+
+require_once __DIR__ . '/../includes/sidebar.php';
+
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
+<div class="content-wrapper">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Nueva herramienta</title>
-</head>
+    <div class="content-header">
 
-<body>
+        <div class="container-fluid">
 
-<h1>Nueva herramienta</h1>
+            <div class="row mb-2">
 
-<form method="POST">
+                <div class="col-sm-6">
 
-    <div>
-        <label>Código:</label>
-        <input
-            type="text"
-            name="codigo"
-            required
-        >
+                    <h1 class="m-0">
+                        Nueva herramienta
+                    </h1>
+
+                </div>
+
+                <div class="col-sm-6">
+
+                    <ol class="breadcrumb float-sm-right">
+
+                        <li class="breadcrumb-item">
+
+                            <a href="/prestamos2/index.php">
+                                Inicio
+                            </a>
+
+                        </li>
+
+                        <li class="breadcrumb-item">
+
+                            <a href="index.php">
+                                Herramientas
+                            </a>
+
+                        </li>
+
+                        <li class="breadcrumb-item active">
+                            Nueva
+                        </li>
+
+                    </ol>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <br>
 
-    <div>
-        <label>Nombre:</label>
-        <input
-            type="text"
-            name="nombre"
-            required
-        >
-    </div>
+    <section class="content">
 
-    <br>
+        <div class="container-fluid">
 
-    <div>
-        <label>Descripción:</label>
-        <input
-            type="text"
-            name="descripcion"
-        >
-    </div>
+            <?php if ($mensaje): ?>
 
-    <br>
+                <div class="alert alert-success">
 
-    <div>
-        <label>Cantidad:</label>
-        <input
-            type="number"
-            name="cantidad"
-            min="1"
-            required
-        >
-    </div>
+                    <i class="fas fa-check"></i>
 
-    <br>
+                    <?= htmlspecialchars($mensaje) ?>
 
-    <button type="submit">
-        Guardar herramienta
-    </button>
+                </div>
 
-</form>
+            <?php endif; ?>
 
-</body>
 
-</html>
+            <div class="row">
+
+                <div class="col-md-8">
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <h3 class="card-title">
+                                Registrar herramienta
+                            </h3>
+
+                        </div>
+
+
+                        <form method="POST">
+
+                            <div class="card-body">
+
+                                <div class="form-group">
+
+                                    <label for="codigo">
+                                        Código
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="codigo"
+                                        id="codigo"
+                                        class="form-control"
+                                        placeholder="Ej. H001"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="nombre">
+                                        Nombre
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="nombre"
+                                        id="nombre"
+                                        class="form-control"
+                                        placeholder="Ej. Pala"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="descripcion">
+                                        Descripción
+                                    </label>
+
+                                    <textarea
+                                        name="descripcion"
+                                        id="descripcion"
+                                        class="form-control"
+                                        rows="3"
+                                        placeholder="Descripción de la herramienta"
+                                    ></textarea>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="cantidad">
+                                        Cantidad
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        name="cantidad"
+                                        id="cantidad"
+                                        class="form-control"
+                                        min="1"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-footer">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >
+
+                                    <i class="fas fa-save"></i>
+
+                                    Guardar
+
+                                </button>
+
+
+                                <a
+                                    href="index.php"
+                                    class="btn btn-secondary"
+                                >
+
+                                    <i class="fas fa-arrow-left"></i>
+
+                                    Cancelar
+
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<?php
+
+require_once __DIR__ . '/../includes/footer.php';
+
+?>
