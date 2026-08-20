@@ -46,14 +46,13 @@ require_once __DIR__ . '/../includes/sidebar.php';
            <!-- BOTÓN NUEVA HERRAMIENTA -->
             <div class="row">
                 <div class="col-12">
-                    <?php if (tienePermiso('herramientas.crear')): ?>
-
-                        <a href="crear.php" class="btn btn-primary mb-3">
-                            <i class="fas fa-plus"></i>
-                            Nueva herramienta
-                        </a>
-
-                    <?php endif; ?>
+                    <a
+                        href="crear.php"
+                        class="btn btn-primary mb-3"
+                    >
+                        <i class="fas fa-plus"></i>
+                        Nueva herramienta
+                    </a>
                 </div>
             </div>
             <!-- TABLA -->
@@ -106,28 +105,18 @@ require_once __DIR__ . '/../includes/sidebar.php';
                                                 </span>
                                             </td>
                                             <td>
-                                                <?php if (tienePermiso('herramientas.editar')): ?>
-
-                                                    <a
-                                                        href="editar.php?id=<?= $herramienta['id'] ?>"
-                                                        class="btn btn-warning btn-sm"
-                                                        title="Editar"
-                                                    >
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-
-                                                <?php endif; ?>
-                                                <?php if (tienePermiso('herramientas.eliminar')): ?>
-
-                                                    <a
-                                                        href="eliminar.php?id=<?= $herramienta['id'] ?>"
-                                                        class="btn btn-danger btn-sm"
-                                                        title="Eliminar"
-                                                    >
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-
-                                                <?php endif; ?>
+                                                <a
+                                                    href="editar.php?id=<?= $herramienta['id'] ?>"
+                                                    class="btn btn-warning btn-sm"
+                                                >
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a
+                                                    href="eliminar.php?id=<?= $herramienta['id'] ?>"
+                                                    class="btn btn-danger btn-sm"
+                                                >
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

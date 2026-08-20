@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 nombre,
                 correo,
                 password_hash
-            FROM lector
+            FROM usuarios
             WHERE correo = :correo
             LIMIT 1
         ";

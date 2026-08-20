@@ -1,6 +1,10 @@
 <?php
 
 require_once __DIR__ . '/../config/database.php';
+//se agrega seguridad
+require_once __DIR__ . '/../includes/auth.php';
+
+requierePermiso('herramientas.crear');
 
 $mensaje = '';
 

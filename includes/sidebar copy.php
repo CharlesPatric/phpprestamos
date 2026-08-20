@@ -1,11 +1,5 @@
-<?php
-
-require_once __DIR__ . '/auth.php';
-
-?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <li class="nav-item">
-                    <a
+                   <a
                        href="/prestamos2/index.php"
                        class="nav-link"
                    >

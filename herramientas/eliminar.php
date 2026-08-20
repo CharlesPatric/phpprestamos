@@ -1,5 +1,9 @@
 <?php
+//se agrega seguridad
+require_once __DIR__ . '/../includes/auth.php';
+requierePermiso('herramientas.eliminar');
 require_once __DIR__ . '/../config/database.php';
+
 $id = $_GET['id'];
 // --------------------------------------------------
 // ELIMINAR HERRAMIENTA
