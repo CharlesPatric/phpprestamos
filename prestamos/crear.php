@@ -10,8 +10,8 @@ require_once __DIR__ . '/../config/database.php';
 $sql = "
     SELECT
         registro,
-        nombre,
-        correo
+        nombre
+        
     FROM lector
     ORDER BY nombre ASC
 ";

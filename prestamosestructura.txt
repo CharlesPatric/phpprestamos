@@ -1,4 +1,4 @@
-prestamos/
+prestamos2/
 │
 ├── index.php
 │

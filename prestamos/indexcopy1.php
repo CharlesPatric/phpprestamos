@@ -3,24 +3,26 @@
 require_once __DIR__ . '/../config/database.php';
 
 $sql = "
-    SELECT 
-        p.id, 
-        p.registro_estudiante, 
-        l.nombre AS estudiante, 
-        h.codigo AS codigo_herramienta, 
-        h.nombre AS herramienta, 
+    SELECT
+        p.id,
+        p.registro_estudiante,
+        l.nombre AS estudiante,
+        h.codigo AS codigo_herramienta,
+        h.nombre AS herramienta,
         p.fecha_prestamo,
-        p.fecha_devolucion, 
-        p.estado 
-    FROM prestamos p 
-        INNER JOIN lector l 
-            ON p.registro_estudiante = l.registro 
-        INNER JOIN prestamo_detalle pe 
-            ON p.id=pe.prestamo_id 
-        INNER JOIN herramientas h 
-            ON pe.herramienta_id = h.id 
-    ORDER BY p.id 
-    DESC LIMIT 5;
+        p.fecha_devolucion,
+        p.estado,
+        p.observaciones
+
+    FROM prestamos p
+
+    INNER JOIN lector l
+        ON p.registro_estudiante = l.registro
+
+    INNER JOIN herramientas h
+        ON p.herramienta_id = h.id
+
+    ORDER BY p.id DESC
 ";
 
 $stmt = $pdo->query($sql);

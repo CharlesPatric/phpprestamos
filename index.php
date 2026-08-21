@@ -84,26 +84,23 @@ $total_disponibles = $stmt->fetch()['total'];
 // ==================================================
 
 $sql = "
-    SELECT
-        p.id,
-        p.registro_estudiante,
-        l.nombre AS estudiante,
-        h.codigo AS codigo_herramienta,
-        h.nombre AS herramienta,
-        p.fecha_prestamo,
-        p.estado
-
-    FROM prestamos p
-
-    INNER JOIN lector l
-        ON p.registro_estudiante = l.registro
-
-    INNER JOIN herramientas h
-        ON p.herramienta_id = h.id
-
-    ORDER BY p.id DESC
-
-    LIMIT 5
+SELECT 
+    p.id, 
+    p.registro_estudiante, 
+    l.nombre AS estudiante, 
+    h.codigo AS codigo_herramienta, 
+    h.nombre AS herramienta, 
+    p.fecha_prestamo, 
+    p.estado 
+FROM prestamos p 
+INNER JOIN lector l 
+    ON p.registro_estudiante = l.registro 
+INNER JOIN prestamo_detalle pe 
+    on p.id=pe.prestamo_id 
+INNER JOIN herramientas h 
+    ON pe.herramienta_id = h.id 
+ORDER BY p.id 
+DESC LIMIT 5;
 ";
 
 $stmt = $pdo->query($sql);

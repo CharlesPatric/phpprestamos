@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$dbname = 'prestamofca';
+$dbname = 'prestamofca2';
 $username = 'root';
 $password = '';
 
